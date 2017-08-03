@@ -1,13 +1,16 @@
-let fn_signin = async (ctx,next) => {
-    const name = ctx.request.body.name || '',
-          password = ctx.request.body.password || '';
-    if (name == 'koa' && password == '123') {
-        ctx.response.body = `Welcome,${name}`;
-    } else {
-        ctx.response.body = `<p>signin failed,<a href='/'>try again</a></p>`;
-    }
-};
-
 module.exports = {
-    'POST /signin': fn_signin
+    'POST /signin': async (ctx,next) => {
+        const email = ctx.request.body.email || '',
+            password = ctx.request.body.password || '';
+        if (email == 'admin@example.com' && password == '123456') {
+            ctx.render('signin-ok.html',{
+                title: 'signin ok',
+                name: 'node'
+            });
+        } else {
+            ctx.render('signin-failed.html',{
+                title: 'signin failed'
+            });
+        }
+    }
 }
